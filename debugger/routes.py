@@ -47,9 +47,6 @@ def ticket(ticket_id):
     ticket = Tickets.query.get_or_404(ticket_id)
     return render_template('ticket.html', title=ticket.title, ticket=ticket)
 
-@app.route('/question')
-def question():
-    return render_template('question.html')
 
 @app.route('/createTicket',methods=['GET','POST'])
 def createTicket():
@@ -82,6 +79,8 @@ def ask():
 @app.route('/unanswered')
 def unanswered():
     return render_template('unanswered.html')
+
+
 @app.route('/users')
 def users():
     users = Users.query.all()
