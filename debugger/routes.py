@@ -81,6 +81,10 @@ def unanswered():
     return render_template('unanswered.html')
 
 
+@app.route('/question')
+def question():
+    return render_template('question.html')
+
 @app.route('/users')
 def users():
     users = Users.query.all()
