@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Question</title>
+    <title>Users</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
@@ -20,7 +20,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Questions & Answers</a>
+          <a class="navbar-brand" href="{{ url_for ('index') }}">Questions & Answers</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -34,6 +34,7 @@
             {% endif %}
             {% if current_user.is_authenticated and current_user['expert'] == 1 %}
             <li><a href="{{ url_for ('answer') }}">Create a Ticket</a></li>
+            <li><a href="{{ url_for ('createProject') }}">Create a Project</a></li>
             {% endif %}
             {% if current_user.is_authenticated and current_user['admin'] == 1 %}
             <li><a href="{{ url_for ('users') }}">User Setup</a></li>
@@ -48,11 +49,20 @@
 
     <div class="container theme-showcase" role="main">
 
-      <div class="jumbotron">
-        <h1>What?</h1>
-        <p>This is the answer.</p>
-        <p><a class="btn btn-primary btn-lg">Asked By: Herbert</a></p>
-        <p><a class="btn btn-primary btn-lg">Answered By: Anthony</a></p>
+      <div class="page-header">
+        <h1>Users</h1>
+        <h6>Click to promote to expert</h6>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="list-group">
+            {% for user in users %}
+            <a href="{{ url_for ('promote', user_id = user['id']) }}" class="list-group-item {% if user['expert'] == 1 %} active {% endif %}">
+              <h4 class="list-group-item-heading">{{ user['username'] }}</h4>
+            </a>
+            {% endfor %}
+          </div>
+        </div><!-- /.col-lg-12 -->
       </div>
 
     </div> <!-- /container -->

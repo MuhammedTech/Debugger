@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError,TextAreaField,SelectField
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,widgets,TextAreaField,SelectMultipleField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField,QuerySelectMultipleField
 from wtforms.validators import  DataRequired,Length
+from debugger.models import Users,Projects
 
 
 class RegistrationForm(FlaskForm):
@@ -20,8 +21,22 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember me')
     submit = SubmitField('Login')
 
+
+"""class MultiCheckboxField(QuerySelectField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()"""
+
+class ProjectForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Text',validators=[DataRequired()])
+    user_id = QuerySelectMultipleField('Users',query_factory=lambda: Users.query)
+    submit = SubmitField('Create')
+
 class TicketForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     ticketText = TextAreaField('Text',validators=[DataRequired()])
-    user_id = QuerySelectField('Users',query_factory=lambda: Users.query.all())
+    user_id = QuerySelectField('Users',query_factory=lambda: Users.query)
+    project = QuerySelectField('Projects',query_factory=lambda: Projects.query)
     submit = SubmitField('Create')
+
+
