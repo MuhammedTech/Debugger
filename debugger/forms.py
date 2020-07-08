@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,widgets,TextAreaField,SelectMultipleField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,widgets,TextAreaField,SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField,QuerySelectMultipleField
 from wtforms.validators import  DataRequired,Length
 from debugger.models import Users,Projects
@@ -37,6 +37,7 @@ class TicketForm(FlaskForm):
     ticketText = TextAreaField('Text',validators=[DataRequired()])
     user_id = QuerySelectField('Users',query_factory=lambda: Users.query)
     project = QuerySelectField('Projects',query_factory=lambda: Projects.query)
+    priority = SelectField('Priority',choices=[(1,'Critical'),(2,'ASAP')])
     submit = SubmitField('Create')
 
 

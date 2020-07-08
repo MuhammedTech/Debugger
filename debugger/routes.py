@@ -80,6 +80,10 @@ def ask():
 def unanswered():
     return render_template('unanswered.html')
 
+@app.route('/answer')
+def answer():
+    return render_template('answer.html')
+
 
 @app.route('/question')
 def question():

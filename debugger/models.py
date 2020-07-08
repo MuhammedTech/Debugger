@@ -31,6 +31,9 @@ class Projects(db.Model):
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     tickets = db.relationship('Tickets', backref='projector', lazy=True)
 
+    def __repr__(self):
+        return f"Tickets('{self.title}','{self.tickets}')"
+
 
 
 class Tickets(db.Model):
@@ -43,6 +46,7 @@ class Tickets(db.Model):
     created_by_id = db.Column(db.Integer, nullable=False)
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable=False)
+    project = db.relationship('Projects', backref='ticketso', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.title}','{self.date_posted}')"
+        return f"Tickets('{self.title}','{self.date_posted}')"
