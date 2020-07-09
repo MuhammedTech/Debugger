@@ -21,3 +21,5 @@ login_manager = LoginManager(app)
 from debugger import routes
 
 #push changes  git push origin master
+#set admin     update users set admin = '1' where id = 1;
+#check for error on forms      {{ form.errors }}

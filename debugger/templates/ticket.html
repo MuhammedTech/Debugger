@@ -6,12 +6,23 @@
           {{ show_links(current_user) }}
 {% endblock %}
 {% block body %}
-      <div class="jumbotron">
-        <h1>{{ ticket.title }}</h1>
-        <p>{{ ticket.ticketText }}</p>
-        <p><a class="btn btn-primary btn-lg">{{ ticket.created_by_id }}</a></p>
-        <p><a class="btn btn-primary btn-lg">{{ ticket.expert_id }}</a></p>
-        <p><a class="btn btn-primary btn-lg">{{ ticket.project_id }}</a></p>
+<div class="well bs-component">
+    <dl class="row">
+      <dt class="col-sm-3">Title</dt>
+      <dd class="col-sm-9">{{ ticket.title }}</dd>
 
-      </div>
+      <dt class="col-sm-3">Description</dt>
+      <dd class="col-sm-9">{{ ticket.ticket_text }}</dd>
+
+      <dt class="col-sm-3">Created by:</dt>
+      <dd class="col-sm-9">{{ ticket.created_by_id }}</dd>
+
+      <dt class="col-sm-3">Assigned to:</dt>
+      <dd class="col-sm-9">{{ ticket.expert_id }}</dd>
+
+        <dt class="col-sm-3">Project:</dt>
+      <dd class="col-sm-9">{{ ticket.project_id }}</dd>
+    </dl>
+</div>
+
 {% endblock %}

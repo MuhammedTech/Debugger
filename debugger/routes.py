@@ -32,6 +32,7 @@ def login():
         user = Users.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password,form.password.data):
             login_user(user,remember = form.remember.data)
+            flash("You've logged in successfully", 'success')
             return redirect(url_for('index'))
         else:
             flash('Login Unsuccessful.Please check username and password','danger')
@@ -53,10 +54,10 @@ def createTicket():
     users = Users.query.all()
     form = TicketForm()
     if form.validate_on_submit():
-       ticket = Tickets(title=form.title.data,ticket_text=form.ticketText.data,created_by_id=current_user.username,expert_id= str(form.user_id.data),project_id= str(form.project.data))
+       ticket = Tickets(title=form.title.data,ticket_text=form.ticket_text.data,created_by_id=current_user.username,expert_id= str(form.user_id.data),project_id= str(form.project.data))
        db.session.add(ticket)
        db.session.commit()
-       flash('You ticket has been created', 'success')
+       flash('Your ticket has been created', 'success')
        return redirect(url_for('index'))
     return render_template('createTicket.html',title='Create a Ticket',form=form, users=users)
 
@@ -71,6 +72,34 @@ def createProject():
         flash('You project has been created', 'success')
         return redirect(url_for('index'))
     return render_template('createProject.html',form = form, users = users)
+
+
+@app.route('/editTicket/<ticket_id>/edit',methods=['GET','POST'])
+def editTicket(ticket_id):
+    ticket = Tickets.query.get_or_404(ticket_id)
+    form = TicketForm()
+    if form.validate_on_submit():
+        ticket.title = form.title.data
+        ticket.ticket_text = form.ticket_text.data
+        ticket.expert_id = str(form.user_id.data)
+        ticket.created_by_id = current_user.username
+        ticket.project_id = ticket.project_id
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('index', ticket_id=ticket.id))
+    elif request.method == "GET":
+        form.title.data = ticket.title
+        form.ticket_text.data = ticket.ticket_text
+        form.user_id.data = ticket.expert_id
+    return render_template('editTicket.html',form=form, title='Edit Ticket')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 @app.route('/ask')
 def ask():
@@ -106,4 +135,4 @@ def promote(user_id):
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))

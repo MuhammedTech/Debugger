@@ -13,7 +13,7 @@
             <li><a href="{{ url_for ('createProject') }}">Create a Project</a></li>
             {% endif %}
             {% if current_user.is_authenticated and current_user['admin'] == 1 %}
-            <li><a href="{{ url_for ('users') }}">User Setup</a></li>
+            <li><a href="{{ url_for ('users') }}">Manage Roles</a></li>
             {% endif %}
             {% if current_user.is_authenticated %}
             <li><a href="{{ url_for ('logout') }}">Logout</a></li>

@@ -21,19 +21,18 @@ class Users(db.Model,UserMixin):
     tickets = db.relationship('Tickets',backref='author',lazy=True)
 
     def __repr__(self):
-        return f"User('{self.username}')"
+        return f"{self.username}"
 
 class Projects(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable = False)
     description = db.Column(db.Text, nullable = False)
     created_by_id = db.Column(db.Integer, nullable = False)
-    expert_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    expert_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     tickets = db.relationship('Tickets', backref='projector', lazy=True)
 
     def __repr__(self):
-        return f"Tickets('{self.title}','{self.tickets}')"
-
+        return f"{self.title}"
 
 
 class Tickets(db.Model):
@@ -42,11 +41,15 @@ class Tickets(db.Model):
     title = db.Column(db.String(100),nullable=False)
     ticket_text = db.Column(db.Text,nullable=False)
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
-    answer_text = db.Column(db.Text)
+    answer_text = db.Column(db.Text) #delete this
+    #status = #open (default), closed (only expert) , resolved ( only developer)
+    #priority = low,medium,high
+    #comment =
+    #attachment =
     created_by_id = db.Column(db.Integer, nullable=False)
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable=False)
-    project = db.relationship('Projects', backref='ticketso', lazy=True)
+    projects = db.relationship('Projects', backref='ticketso', lazy=True)
 
     def __repr__(self):
         return f"Tickets('{self.title}','{self.date_posted}')"

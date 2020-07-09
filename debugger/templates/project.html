@@ -6,14 +6,20 @@
           {{ show_links(current_user) }}
 {% endblock %}
 {% block body %}
+<div class="well bs-component">
+<dl class="row">
+  <dt class="col-sm-3">Title</dt>
+  <dd class="col-sm-9">{{ project.title }}</dd>
 
-      <div class="jumbotron">
-        <h1>{{ project.title }}</h1>
-        <p>{{ project.description }}</p>
-        <p><a class="btn btn-primary btn-md">{{ project.created_by_id }}</a></p>
+  <dt class="col-sm-3">Description</dt>
+  <dd class="col-sm-9">{{ project.description }}</dd>
 
-        <p><a class="btn btn-primary btn-md">{{ project.expert_id }}</a></p>
+  <dt class="col-sm-3">Created by:</dt>
+  <dd class="col-sm-9">{{ project.created_by_id }}</dd>
 
-        <p><a class="btn btn-primary btn-lg">{{ project.ticketso }}</a></p>
-      </div>
+  <dt class="col-sm-3 text-truncate">Tickets:</dt>
+  <dd class="col-sm-9">{{ project.ticketso }}</dd>
+
+</dl>
+    </div>
 {% endblock %}

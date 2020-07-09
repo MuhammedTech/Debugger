@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from "show_links.html" import show_links %}
+
+{% block title %}Create a Project{% endblock %}
+{% block nav%}
+          {{ show_links(current_user) }}
+{% endblock %}
+{% block body %}
+
+      <div class="jumbotron">
+        <h1>{{ current_user.username }}</h1>
+      </div>
+
+{%endblock%}
