@@ -6,59 +6,70 @@
           {{ show_links(current_user) }}
 {% endblock %}
 {% block body %}
-<div class="jumbotron">
+    <div class="col-lg-12">
         <h1>About</h1>
-        <p>About Bug Tracker
-Bug Tracker is an application to track errors in software. It was created by Annette Arrigucci as a student project for the Coder Foundry summer 2016 course.
+        <p>
+Bug Tracker is an application to track errors in software. It was created by Mukammed Alimbet as a student project for the UCLA Extension certificate program in "Application Programming".
 
 Bug Tracker uses a ticketing system to record bugs or other issues in the software development process on a per-project basis. It implements user- and role-level security to ensure only authorized users can access tickets and projects.
 
-The application was built using ASP.NET MVC and C# with an SQL Server database. Development was completed with Visual Studio Community 2015. Bug Tracker’s webpages use HTML5, model binding with Razor and Bootstrap with the Bootswatch Spacelab theme applied.
+The application was built using Python / Flask framework with an sqlite3 database. Bug Tracker’s webpages use HTML5/Bootstrap.
 
-Roles: Bug Tracker has four roles that users can be assigned to. A user can be in more than one role at one time. Users are automatically placed in a Submitter role upon registration.
+Roles: Bug Tracker has four roles that users can be assigned to. Users are automatically placed in a developer role upon registration.
 
 Below are brief descriptions of the permissions of each role:
+<p>
 
-Submitter
 
-Create new tickets for assigned projects
+    </p>
+
+        <h4><strong>Submitter</strong></h4>
+
+<p>Create new tickets for assigned projects
 View and edit tickets they have submitted
 Developer
 
-View and edit tickets they have been assigned
-Project Manager
+View and edit tickets they have been assigned</p>
 
-View and edit tickets for projects they are assigned to
+        <h4><strong>Project Manager</strong></h4>
+
+<p>View and edit tickets for projects they are assigned to
 Create new projects
 Assign users to projects
 Assign a developer to a ticket
-Archive projects
-Admin
+    Archive projects</p>
 
-Assign users to roles
+        <h4><strong>Admin</strong></h4>
+
+<p>Assign users to roles
 View and edit all tickets
 Create new projects
 Assign users to projects
 Archive projects
-For each role, users can add comments or attachments to tickets they have access to.
+    For each role, users can add comments or attachments to tickets they have access to.</p>
 
-Ticket priorities: A ticket can be Critical, High, Medium or Low priority.
 
-Ticket statuses: A ticket can be in one of five statuses:
+        <h4><strong>Ticket priorities</strong></h4> <p>A ticket can be <em>Critical</em>, <em>High</em>, <em>Medium</em> or <em>Low</em> priority.</p>
 
-New: Ticket automatically assigned this status on creation
-Waiting for support: Ticket automatically changed to this status when it is assigned to a developer
-Waiting for customer: Ticket is waiting on a response from a third-party source
-On hold: Work on the ticket has been suspended
-Resolved: The issue raised in the ticket has been resolved
-Ticket types: A ticket can be of type Error report, Service request, Feature request or Other.
+          <li>Ticket statuses: A ticket can be in one of five statuses:
+    <ul>
+      <li>New: Ticket automatically assigned this status on creation</li>
+      <li>Waiting for support: Ticket automatically changed to this status when it is assigned to a developer</li>
+      <li>Waiting for customer: Ticket is waiting on a response from a third-party source</li>
+      <li>On hold: Work on the ticket has been suspended</li>
+        <li>Resolved: The issue raised in the ticket has been resolved</li>
+    </ul>
+  </li>
+        <p>Ticket types: A ticket can be of type Error report, Service request, Feature request or Other.</p>
 
-FAQs
-How do I submit a new ticket?
+
+
+        <h2>FAQ</h2>
+<h5><em>How do I submit a new ticket?</em></h5>
 
 Make sure you are assigned the Submitter role and have been assigned to the project. If not, contact your Admin. Navigate to your Tickets page and click on the Create New link to fill out the ticket details and submit the ticket.
 
-When are email notifications sent out?
+<h5><em>When are email notifications sent out?</em></h5>
 
 Email notifications are sent to developers on the following events:
 
@@ -66,11 +77,11 @@ Developer assigned to ticket
 Ticket reassigned to another developer
 User other than the developer edits ticket
 User other than developer adds a comment or attachment
-Can I change my user name and password?
+<h5><em>Can I change my user name and password?</em></h5>
 
 Yes, any user can edit his or her first and last name, email and/or password. Go to Settings on the top menu to change these.
 
-How can I get my role changed?
+<h5><em>How can I get my role changed?</em></h5>
 
             Contact your Admin to change your role.</p></div>
 {% endblock %}

@@ -66,7 +66,7 @@ def createProject():
     users = Users.query.all()
     form = ProjectForm()
     if form.validate_on_submit():
-        project = Projects(title = form.title.data, description = form.description.data, created_by_id = current_user.username, expert_id = str(form.user_id.data))
+        project = Projects(title = form.title.data, description = form.description.data, created_by_id = current_user.username, expert_id = str(form.user_id.data), ticketso=form)
         db.session.add(project)
         db.session.commit()
         flash('You project has been created', 'success')
