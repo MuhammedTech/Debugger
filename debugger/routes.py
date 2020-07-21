@@ -54,7 +54,7 @@ def createTicket():
     users = Users.query.all()
     form = TicketForm()
     if form.validate_on_submit():
-       ticket = Tickets(title=form.title.data,ticket_text=form.ticket_text.data,created_by_id=current_user.username,expert_id= str(form.user_id.data),project_id= str(form.project.data))
+       ticket = Tickets(title=form.title.data,ticket_text=form.ticket_text.data,created_by_id=current_user.username,expert_id= str(form.user_id.data),project_id= str(form.project.data),status=form.status.data,priority=form.priority.data)
        db.session.add(ticket)
        db.session.commit()
        flash('Your ticket has been created', 'success')
@@ -66,7 +66,7 @@ def createProject():
     users = Users.query.all()
     form = ProjectForm()
     if form.validate_on_submit():
-        project = Projects(title = form.title.data, description = form.description.data, created_by_id = current_user.username, expert_id = str(form.user_id.data), ticketso=form)
+        project = Projects(title = form.title.data, description = form.description.data, created_by_id = current_user.username, expert_id = str(form.user_id.data))
         db.session.add(project)
         db.session.commit()
         flash('You project has been created', 'success')
@@ -84,6 +84,8 @@ def editTicket(ticket_id):
         ticket.expert_id = str(form.user_id.data)
         ticket.created_by_id = current_user.username
         ticket.project_id = ticket.project_id
+        ticket.status = form.status.data
+        ticket.priority = form.priority.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
         return redirect(url_for('index', ticket_id=ticket.id))

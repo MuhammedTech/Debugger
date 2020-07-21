@@ -36,13 +36,11 @@ class Projects(db.Model):
 
 class Tickets(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    #question text
     title = db.Column(db.String(100),nullable=False)
     ticket_text = db.Column(db.Text,nullable=False)
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
-    answer_text = db.Column(db.Text) #delete this
-    #status = #open (default), closed (only expert) , resolved ( only developer)
-    #priority = low,medium,high
+    status = db.Column(db.String(30), nullable=False)
+    priority = db.Column(db.String(30), nullable=False)
     #comment =
     #attachment =
     created_by_id = db.Column(db.Integer, nullable=False)

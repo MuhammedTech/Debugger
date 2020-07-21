@@ -32,12 +32,15 @@ class ProjectForm(FlaskForm):
     user_id = QuerySelectMultipleField('Users',query_factory=lambda: Users.query)
     submit = SubmitField('Submit')
 
+
+
 class TicketForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     ticket_text = TextAreaField('Text',validators=[DataRequired()])
     user_id = QuerySelectField('Users',query_factory=lambda: Users.query)
     project = QuerySelectField('Projects',query_factory=lambda: Projects.query)
+    status = SelectField('Status',coerce=str,choices=[('Open','Open'),('Pending','Pending'),('Resolved','Resolved'),('Closed','Closed')])
+    priority = SelectField('Priority',choices=[('Low','Low'),('Medium','Medium'),('High','High'),('Critical','Critical')])
     submit = SubmitField('Submit')
-    #add assign button on tickets
 
 

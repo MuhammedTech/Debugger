@@ -18,6 +18,8 @@
                   <th scope="col">Tickets</th>
                   <th scope="col">Created</th>
                   <th scope="col">Project</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Priority</th>
                 </tr>
               </thead>
               <tbody>
@@ -27,7 +29,8 @@
                     <td><a href="{{ url_for ('ticket', ticket_id = ticket.id ) }}">{{ticket.title}}</a></td>
                       <td>{{ ticket.date_posted }}</td>
                       <td>{{ ticket.project_id }}</td>
-                      <td>{{ ticket.priority }}</td>
+                      <td>{{ ticket.status }}</td>
+                     <td>{{ ticket.priority }}</td>
                       <td><a href="{{ url_for ('ticket', ticket_id = ticket.id ) }}">Details</a></td>
                     {% if current_user.is_authenticated and current_user['expert'] == 1 %}
                     <td><a href="{{ url_for ('editTicket', ticket_id = ticket.id ) }}">Edit</a></td>
