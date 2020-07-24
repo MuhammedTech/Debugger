@@ -17,9 +17,18 @@
                 <fieldset>
                   <div class="form-group">
                     {{ form.username.label (class="col-lg-2 control-label") }}
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
                     <div class="col-lg-10">
                       {{ form.username (class="form-control") }}
                     </div>
+                    {% endif %}
                   </div>
                   <div class="form-group">
                     {{ form.password.label (class="col-lg-2 control-label") }}

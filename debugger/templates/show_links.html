@@ -7,7 +7,6 @@
             <li><a href="{{ url_for ('register') }}">Register</a></li>
             {% endif %}
             {% if current_user.is_authenticated and current_user['admin'] == 0 and current_user['expert'] == 0%}
-            <li><a href="{{ url_for ('ask') }}">Ask Question</a></li>
             {% endif %}
             {% if current_user.is_authenticated and current_user['expert'] == 1 %}
             <li><a href="{{ url_for ('createTicket') }}">Create a Ticket</a></li>

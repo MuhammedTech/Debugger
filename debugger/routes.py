@@ -2,7 +2,7 @@ from flask import render_template,flash,redirect,url_for,request
 from debugger import app,db
 from debugger.forms import RegistrationForm,LoginForm,TicketForm,ProjectForm
 from debugger.models import Users,Projects,Tickets
-from flask_login import current_user,logout_user,login_user
+from flask_login import current_user,logout_user,login_user, login_required
 from debugger import bcrypt
 
 @app.route('/')
@@ -32,25 +32,32 @@ def login():
         user = Users.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password,form.password.data):
             login_user(user,remember = form.remember.data)
+            next_page = request.args.get('next')
             flash("You've logged in successfully", 'success')
-            return redirect(url_for('index'))
+            return redirect(next_page) if next_page else redirect(url_for('index'))
         else:
             flash('Login Unsuccessful.Please check username and password','danger')
     return render_template('login.html',title='Login',form=form)
 
+
 @app.route('/project/<project_id>')
+@login_required
 def project(project_id):
     project = Projects.query.get_or_404(project_id)
     return render_template('project.html', title=project.title, project=project)
 
 @app.route('/ticket/<ticket_id>')
+@login_required
 def ticket(ticket_id):
     ticket = Tickets.query.get_or_404(ticket_id)
     return render_template('ticket.html', title=ticket.title, ticket=ticket)
 
 
 @app.route('/createTicket',methods=['GET','POST'])
+@login_required
 def createTicket():
+    if current_user.expert == 0:
+        return redirect(url_for('index'))
     users = Users.query.all()
     form = TicketForm()
     if form.validate_on_submit():
@@ -62,7 +69,10 @@ def createTicket():
     return render_template('createTicket.html',title='Create a Ticket',form=form, users=users)
 
 @app.route('/createProject',methods=['GET','POST'])
+@login_required
 def createProject():
+    if current_user.expert == 0:
+        return redirect(url_for('index'))
     users = Users.query.all()
     form = ProjectForm()
     if form.validate_on_submit():
@@ -75,7 +85,10 @@ def createProject():
 
 
 @app.route('/editTicket/<ticket_id>/edit',methods=['GET','POST'])
+@login_required
 def editTicket(ticket_id):
+    if current_user.expert == 0:
+        return redirect(url_for('index'))
     ticket = Tickets.query.get_or_404(ticket_id)
     form = TicketForm()
     if form.validate_on_submit():
@@ -90,43 +103,38 @@ def editTicket(ticket_id):
         flash('Your post has been updated!', 'success')
         return redirect(url_for('index', ticket_id=ticket.id))
     elif request.method == "GET":
+        form.status.default = ticket.status
+        form.priority.default = ticket.priority
+        form.user_id.default = ticket.expert_id
+        form.project.default = ticket.project_id
+        form.process()
         form.title.data = ticket.title
         form.ticket_text.data = ticket.ticket_text
-        form.user_id.data = ticket.expert_id
     return render_template('editTicket.html',form=form, title='Edit Ticket')
 
 @app.route('/about')
+@login_required
 def about():
     return render_template('about.html')
 
 @app.route('/profile')
+@login_required
 def profile():
     return render_template('profile.html')
 
-@app.route('/ask')
-def ask():
-    return render_template('ask.html')
-
-@app.route('/unanswered')
-def unanswered():
-    return render_template('unanswered.html')
-
-@app.route('/answer')
-def answer():
-    return render_template('answer.html')
-
-
-@app.route('/question')
-def question():
-    return render_template('question.html')
 
 @app.route('/users')
 def users():
     users = Users.query.all()
+    if current_user.admin == 0:
+        return redirect(url_for('index'))
     return render_template('users.html',users=users)
 
 @app.route('/promote/<user_id>')
+@login_required
 def promote(user_id):
+    if current_user.admin == 0:
+        return redirect(url_for('index'))
     user = Users.query.get_or_404(user_id)
     user.expert = 1
     db.session.commit()

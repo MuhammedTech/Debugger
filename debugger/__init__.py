@@ -17,6 +17,8 @@ manager.add_command('db',MigrateCommand)
 
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
 
 from debugger import routes
 

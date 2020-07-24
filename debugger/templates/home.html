@@ -32,7 +32,7 @@
                       <td>{{ ticket.status }}</td>
                      <td>{{ ticket.priority }}</td>
                       <td><a href="{{ url_for ('ticket', ticket_id = ticket.id ) }}">Details</a></td>
-                    {% if current_user.is_authenticated and current_user['expert'] == 1 %}
+                    {% if current_user.is_authenticated and current_user['expert'] == 1 and ticket.status != 'Resolved'  %}
                     <td><a href="{{ url_for ('editTicket', ticket_id = ticket.id ) }}">Edit</a></td>
                     {% endif %}
                 </tr>

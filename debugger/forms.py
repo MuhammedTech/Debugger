@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField,BooleanField,widgets,TextAreaField,SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField,QuerySelectMultipleField
-from wtforms.validators import  DataRequired,Length
+from wtforms.validators import DataRequired, Length, ValidationError
 from debugger.models import Users,Projects
 
 
@@ -10,10 +10,10 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password',validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
-    """def validate_username(self,username):
+    def validate_username(self,username):
         user = Users.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError('That username is taken, please choose different one')"""
+            raise ValidationError('That username is taken, please choose different one')
 
 class LoginForm(FlaskForm):
     username = StringField('Username',validators=[DataRequired(),Length(min=2,max=20)])
@@ -42,5 +42,9 @@ class TicketForm(FlaskForm):
     status = SelectField('Status',coerce=str,choices=[('Open','Open'),('Pending','Pending'),('Resolved','Resolved'),('Closed','Closed')])
     priority = SelectField('Priority',choices=[('Low','Low'),('Medium','Medium'),('High','High'),('Critical','Critical')])
     submit = SubmitField('Submit')
+
+    def iter_choices(self):
+        self.data if self.data is not None else self.coerce(self.default)
+
 
 
