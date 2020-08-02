@@ -8,8 +8,10 @@ from debugger import bcrypt
 @app.route('/')
 def index():
     projects = Projects.query.all()
-    tickets = Tickets.query.all()
-    #tickets = Tickets.query.filter(Tickets.created_by_id == current_user.id).all()
+    if current_user.expert != 1:
+        tickets = Tickets.query.filter(Tickets.expert_id == current_user.username).all()
+    else:
+        tickets = Tickets.query.all()
     return render_template('home.html', projects = projects , tickets = tickets)
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -33,6 +35,7 @@ def login():
         user = Users.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password,form.password.data):
             login_user(user,remember = form.remember.data)
+            print(current_user.id)
             next_page = request.args.get('next')
             flash("You've logged in successfully", 'success')
             return redirect(next_page) if next_page else redirect(url_for('index'))
