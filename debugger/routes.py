@@ -9,6 +9,7 @@ from debugger import bcrypt
 def index():
     projects = Projects.query.all()
     tickets = Tickets.query.all()
+    #tickets = Tickets.query.filter(Tickets.created_by_id == current_user.id).all()
     return render_template('home.html', projects = projects , tickets = tickets)
 @app.route('/register',methods=['GET','POST'])
 def register():

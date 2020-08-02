@@ -18,8 +18,9 @@
   <dd class="col-sm-9">{{ project.created_by_id }}</dd>
 
   <dt class="col-sm-3 text-truncate">Tickets:</dt>
-
-  <dd class="col-sm-9">{{ project.ticketso }}</dd>
+    {% for ticket in project.tickets %}
+  <dd class="col-sm-9">{{ ticket.title }}</dd>
+    {% endfor %}
 
 </dl>
     </div>

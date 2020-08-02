@@ -29,6 +29,7 @@ class Projects(db.Model):
     description = db.Column(db.Text, nullable = False)
     created_by_id = db.Column(db.Integer, nullable = False)
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    tickets = db.relationship('Tickets',backref='ticketso',lazy=True)
 
     def __repr__(self):
         return f"{self.title}"
@@ -43,10 +44,12 @@ class Tickets(db.Model):
     priority = db.Column(db.String(30), nullable=False)
     #comment =
     #attachment =
+    #make user - tickets many to many relationship
     created_by_id = db.Column(db.Integer, nullable=False)
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable=False)
-    projects = db.relationship('Projects', backref=db.backref('ticketso', uselist=False), lazy=True)
+    #projects = db.relationship('Projects', backref=db.backref('ticketso', uselist=False), lazy=True)
+
 
     def __repr__(self):
         return f"Tickets('{self.title}','{self.date_posted}')"

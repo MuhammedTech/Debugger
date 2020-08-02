@@ -27,3 +27,7 @@ from debugger import routes
 #update users set admin = '1' where id = 1;
 #{{ form.errors }}
 #python run.py db migrate and python run.py db upgrade
+
+#                    {% if current_user.is_authenticated and current_user['expert'] == 1 and ticket.status != 'Resolved'  %}
+#                    <td><a href="{{ url_for ('editTicket', ticket_id = ticket.id ) }}">Edit</a></td>
+#                    {% endif %}
