@@ -54,3 +54,5 @@ class Tickets(db.Model):
     def __repr__(self):
         return f"Tickets('{self.title}','{self.date_posted}')"
 
+
+
