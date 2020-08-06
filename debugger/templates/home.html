@@ -13,17 +13,14 @@
       </div>
      <div class="row">
         <div class="col-lg-12">
-            <table id="example" class="table table-hover">
+            <table id="example" class="hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Tickets</th>
                   <th scope="col">Created</th>
-                  <th scope="col">Project</th>
                     <th scope="col">Status</th>
                     <th scope="col">Priority</th>
-                    <th scope="col"></th>
-
                 </tr>
               </thead>
               <tbody>
@@ -32,10 +29,11 @@
                     <th style="background-color:#2b3f50" scope="row">{{ ticket.id }}</th>
                     <td style="background-color:#2b3f50"><a href="{{ url_for ('ticket', ticket_id = ticket.id ) }}">{{ticket.title}}</a></td>
                       <td style="background-color:#2b3f50">{{ ticket.date_posted }}</td>
-                      <td style="background-color:#2b3f50">{{ ticket.project_id }}</td>
                       <td style="background-color:#2b3f50">{{ ticket.status }}</td>
                      <td style="background-color:#2b3f50">{{ ticket.priority }}</td>
-                      <td style="background-color:#2b3f50"><a href="{{ url_for ('ticket', ticket_id = ticket.id ) }}">Details</a></td>
+{% if current_user.is_authenticated and current_user['expert'] == 1 and ticket.status != 'Resolved'  %}
+                    <td style="background-color:#2b3f50"><a href="{{ url_for ('editTicket', ticket_id = ticket.id ) }}">Edit</a></td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
               </tbody>

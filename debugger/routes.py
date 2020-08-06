@@ -5,7 +5,8 @@ from debugger.models import Users,Projects,Tickets
 from flask_login import current_user,logout_user,login_user, login_required
 from debugger import bcrypt
 
-@app.route('/')
+@app.route('/dashboard')
+@login_required
 def index():
     projects = Projects.query.all()
     if current_user.expert != 1:
@@ -26,6 +27,7 @@ def register():
         flash(f'Account created for {form.username.data}!','success')
         return redirect(url_for('login'))
     return render_template('register.html',title='Register',form=form)
+@app.route('/',methods=['GET','POST'])
 @app.route('/login',methods=['GET','POST'])
 def login():
     if current_user.is_authenticated:
@@ -35,7 +37,6 @@ def login():
         user = Users.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password,form.password.data):
             login_user(user,remember = form.remember.data)
-            print(current_user.id)
             next_page = request.args.get('next')
             flash("You've logged in successfully", 'success')
             return redirect(next_page) if next_page else redirect(url_for('index'))
