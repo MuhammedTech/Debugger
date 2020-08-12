@@ -31,3 +31,9 @@ from debugger import routes
 #                    {% if current_user.is_authenticated and current_user['expert'] == 1 and ticket.status != 'Resolved'  %}
 #                    <td><a href="{{ url_for ('editTicket', ticket_id = ticket.id ) }}">Edit</a></td>
 #                    {% endif %}
+
+
+#export FLASK_APP=db_table.py
+# flask db stamp head
+# flask db migrate
+# flask db upgrade

@@ -47,4 +47,9 @@ class TicketForm(FlaskForm):
         self.data if self.data is not None else self.coerce(self.default)
 
 
-
+class CommentForm(FlaskForm):
+    body = TextAreaField('Comment', validators=[DataRequired()])
+    submit = SubmitField('Post')
+class ReplyForm(FlaskForm):
+    reply = StringField('Enter your Reply ', validators=[DataRequired()])
+    submit = SubmitField('Submit')

@@ -1,7 +1,7 @@
 from flask import render_template,flash,redirect,url_for,request
 from debugger import app,db
-from debugger.forms import RegistrationForm,LoginForm,TicketForm,ProjectForm
-from debugger.models import Users,Projects,Tickets
+from debugger.forms import RegistrationForm,LoginForm,TicketForm,ProjectForm,CommentForm,ReplyForm
+from debugger.models import Users,Projects,Tickets,Comment
 from flask_login import current_user,logout_user,login_user, login_required
 from debugger import bcrypt
 
@@ -51,11 +51,25 @@ def project(project_id):
     project = Projects.query.get_or_404(project_id)
     return render_template('project.html', title=project.title, project=project)
 
-@app.route('/ticket/<ticket_id>')
+
+@app.route('/ticket/<ticket_id>',methods=['GET','POST'])
 @login_required
 def ticket(ticket_id):
     ticket = Tickets.query.get_or_404(ticket_id)
-    return render_template('ticket.html', title=ticket.title, ticket=ticket)
+    com = Comment()
+    form = CommentForm()
+    form2 = ReplyForm()
+    if form.validate_on_submit() and form.body.data:
+        comment = Comment(body=form.body.data,ticket_id=ticket_id,author = current_user.username)
+        comment.save()
+        flash('Your comment has been published.')
+        return redirect(url_for('ticket', ticket_id=ticket_id))
+    elif form2.validate_on_submit() and form2.reply.data:
+        commentt = Comment(body=form2.reply.data, author=current_user.username,parent=com)
+        commentt.save()
+        flash('Your reply has been published')
+        return redirect(url_for('ticket'))
+    return render_template('ticket.html', title=ticket.title, ticket=ticket,form=form)
 
 
 @app.route('/createTicket',methods=['GET','POST'])

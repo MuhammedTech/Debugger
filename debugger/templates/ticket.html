@@ -6,6 +6,25 @@
           {{ show_links(current_user) }}
 {% endblock %}
 {% block body %}
+<style>
+  body{margin-top:20px;}
+
+.comment-wrapper .panel-body {
+    max-height:650px;
+    overflow:auto;
+}
+
+.comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+}
+
+.comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
+}
+</style>
 <div class="well bs-component">
     <dl class="row">
       <dt class="col-sm-3">Title</dt>
@@ -30,5 +49,55 @@
       <dd class="col-sm-9">{{ ticket.priority }}</dd>
     </dl>
 </div>
+
+<form method="POST" action="" class="form-horizontal">
+                {{ form.hidden_tag() }}
+<div class="container">
+<div class="row bootstrap snippets">
+    <div class="col-md-8 col-sm-12">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Comment panel
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                    <label class="col-lg-2 control-label">Comment</label>
+                    <div class="col-lg-10">
+                      <p>{{ form.body (class="form-control" , rows=3) }}</p>
+                    </div>
+                  </div>
+                    <br>
+                    <button type="button" class="btn btn-info pull-right">{{ form.submit (class="btn btn-info pull-right")}}</button>
+                    <div class="clearfix"></div>
+                    <hr>
+{% for comment in ticket.comment %}
+                    <ul class="media-list">
+                        <li class="media">
+                            <a href="#" class="pull-left">
+                                <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                            </a>
+                            <div class="media-body">
+                                <span class="text-muted pull-right">
+                                    <small class="text-muted">{{ comment.timestamp }}</small>
+                                </span>
+                                <strong class="text-success">{{ comment.author }}</strong>
+                                <p>
+                                    {{ comment.body }}
+                                </p>
+                                {% include 'reply.html' %}
+                            </div>
+                        </li>
+
+                    </ul>
+ {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
 
 {% endblock %}

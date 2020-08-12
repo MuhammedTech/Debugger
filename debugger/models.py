@@ -42,17 +42,42 @@ class Tickets(db.Model):
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     status = db.Column(db.String(30), nullable=False)
     priority = db.Column(db.String(30), nullable=False)
-    #comment =
     #attachment =
     #make user - tickets many to many relationship
     created_by_id = db.Column(db.Integer, nullable=False)
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable=False)
+    comment = db.relationship('Comment', backref='title', lazy='dynamic')
     #projects = db.relationship('Projects', backref=db.backref('ticketso', uselist=False), lazy=True)
 
 
     def __repr__(self):
         return f"Tickets('{self.title}','{self.date_posted}')"
 
+class Comment(db.Model):
+    _N = 6
 
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime)
+    author = db.Column(db.Integer,nullable=True)
+    path = db.Column(db.Text, index=True)
+    ticket_id = db.Column(db.Integer, db.ForeignKey('tickets.id'),nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'),nullable=False)
+    replies = db.relationship(
+        'Comment', backref=db.backref('parent', remote_side=[id]),
+        lazy='dynamic')
+
+    def __repr__(self):
+        return '<Post %r>' % (self.body)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        prefix = self.parent.path + '.' if self.parent else ''
+        self.path = prefix + '{:0{}d}'.format(self.id, self._N)
+        db.session.commit()
+
+    def level(self):
+        return len(self.path)
 
