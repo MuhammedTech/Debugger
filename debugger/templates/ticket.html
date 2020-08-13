@@ -51,6 +51,7 @@
 </div>
 
 <form method="POST" action="" class="form-horizontal">
+    {{ form.errors }}
                 {{ form.hidden_tag() }}
 <div class="container">
 <div class="row bootstrap snippets">
@@ -98,6 +99,8 @@
     </div>
 </div>
 </div>
+</form>
+
 
 
 {% endblock %}

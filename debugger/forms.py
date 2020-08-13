@@ -51,5 +51,5 @@ class CommentForm(FlaskForm):
     body = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Post')
 class ReplyForm(FlaskForm):
-    reply = StringField('Enter your Reply ', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    text = StringField('Enter your Reply ', validators=[DataRequired()])
+    reply = SubmitField('Submit')

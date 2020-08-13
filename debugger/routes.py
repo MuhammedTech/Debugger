@@ -56,20 +56,20 @@ def project(project_id):
 @login_required
 def ticket(ticket_id):
     ticket = Tickets.query.get_or_404(ticket_id)
-    com = Comment()
+    com = Comment.query.filter_by(ticket_id=ticket.id).order_by(Comment.path.asc()).first()
     form = CommentForm()
     form2 = ReplyForm()
     if form.validate_on_submit() and form.body.data:
-        comment = Comment(body=form.body.data,ticket_id=ticket_id,author = current_user.username)
+        comment = Comment(body=form.body.data,ticket_id=ticket_id,author = current_user.username,parent=com)
         comment.save()
         flash('Your comment has been published.')
         return redirect(url_for('ticket', ticket_id=ticket_id))
     elif form2.validate_on_submit() and form2.reply.data:
-        commentt = Comment(body=form2.reply.data, author=current_user.username,parent=com)
+        commentt = Comment(body=form2.reply.data, author=current_user.username, parent=com)
         commentt.save()
         flash('Your reply has been published')
-        return redirect(url_for('ticket'))
-    return render_template('ticket.html', title=ticket.title, ticket=ticket,form=form)
+        return redirect(url_for('ticket', ticket_id=ticket_id))
+    return render_template('ticket.html', title=ticket.title, ticket=ticket,form=form, form2=form2, comment=com)
 
 
 @app.route('/createTicket',methods=['GET','POST'])

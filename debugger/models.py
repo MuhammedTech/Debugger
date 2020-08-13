@@ -59,7 +59,7 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime)
+    timestamp = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     author = db.Column(db.Integer,nullable=True)
     path = db.Column(db.Text, index=True)
     ticket_id = db.Column(db.Integer, db.ForeignKey('tickets.id'),nullable=False)

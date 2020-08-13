@@ -1,9 +1,19 @@
-{% for reply in comment.replies %}
-
-{% if comment.body_html %}
-                        {{ comment.body_html | safe }}
+<form method="POST" action="" class="form-horizontal">
+{{ form2.hidden_tag() }}
+{% for replyy in comment.replies %}
+  {% if replyy.body_html %}
+                        {{ replyy.body_html | safe }}
                         {% else %}
-                        {{ comment.body }}
+                        {{ replyy.text }}
                     {% endif %}
 {% endfor %}
+
+
+       <div class="comment pull-right">
+              <a hred="" class="reply-button">{{ form2.reply }}</a>
+        </div>
+    </form>
+<script>$('.reply-button').click(function(){
+  $(this).after($('<textarea>').attr('class','reply-box'));
+});​</script>
 

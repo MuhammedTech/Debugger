@@ -61,8 +61,22 @@
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap.min.js"></script>
   <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script>$(document).ready( function () {
-    $('#example').DataTable();
-} );</script>
+<script>
+  $('#example').dataTable( {
+  "columnDefs": [ {
+    "targets": 5,
+    "render": function ( data, type, full, meta ) {
+      return '<a id=n- class="edit" href="'+row.name+'" value="Edit">Edit</a>';
+    }
+  } ]
+} );
+</script>
+  <script>
+    $('#example tbody').on('click', '.edit', function () {
+  var id = $(this).attr("id").match(/\d+/)[0];
+  var data = $('#example').DataTable().row( id ).data();
+  console.log(data[0]);
+});
+  </script>
   </body>
 </html>
