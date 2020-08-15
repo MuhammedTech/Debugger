@@ -50,6 +50,3 @@ class TicketForm(FlaskForm):
 class CommentForm(FlaskForm):
     body = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Post')
-class ReplyForm(FlaskForm):
-    text = StringField('Enter your Reply ', validators=[DataRequired()])
-    reply = SubmitField('Submit')
