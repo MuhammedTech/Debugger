@@ -6,11 +6,11 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 
-
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'thisissecretkey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
 db = SQLAlchemy(app)
 
 migrate = Migrate(app,db)
@@ -22,6 +22,12 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
+
+with app.app_context():
+    if db.engine.url.drivername == 'sqlite':
+        migrate.init_app(app, db, render_as_batch=True)
+    else:
+        migrate.init_app(app, db)
 
 from debugger import routes
 
@@ -40,3 +46,6 @@ from debugger import routes
 # flask db stamp head
 # flask db migrate
 # flask db upgrade
+
+
+#STACK ON MIGRATING 08.17.2020

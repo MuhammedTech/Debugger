@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,widgets,TextAreaField,SelectField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,FileField,TextAreaField,SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField,QuerySelectMultipleField
 from wtforms.validators import DataRequired, Length, ValidationError
 from debugger.models import Users,Projects
+from flask_wtf.file import FileField, FileRequired
 
 
 class RegistrationForm(FlaskForm):
@@ -50,3 +51,7 @@ class TicketForm(FlaskForm):
 class CommentForm(FlaskForm):
     body = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+class AttachForm(FlaskForm):
+    file = FileField('Upload file')
+    submit = SubmitField('Upload')

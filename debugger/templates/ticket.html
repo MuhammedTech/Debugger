@@ -53,6 +53,7 @@
 <form method="POST" action="" class="form-horizontal">
     {{ form.errors }}
                 {{ form.hidden_tag() }}
+                {{ attachform.hidden_tag() }}
 <div class="container">
 <div class="row bootstrap snippets">
     <div class="col-md-8 col-sm-12">
@@ -94,8 +95,27 @@
                 </div>
             </div>
         </div>
-
 </div>
 </div>
 </form>
+<form method="POST" action="" class="form-horizontal" enctype="multipart/form-data">
+    {{ form.errors }}
+                {{ attachform.hidden_tag() }}
+                <div class="form-group">
+                    {{ attachform.file.label() }}
+                    {{ attachform.file(class="form-control-file") }}
+                    {% if attachform.file.errors %}
+                        {% for error in attachform.file.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                    {{ attachform.submit }}
+                </div>
+</form>
+
+<a href="{{ file }}" download>
+ {{ file }}
+</a>
+
+
 {% endblock %}

@@ -1,5 +1,5 @@
 
-from flask_login import UserMixin
+from flask_login import UserMixin,current_user
 from debugger import login_manager,db
 from datetime import datetime
 
@@ -42,12 +42,13 @@ class Tickets(db.Model):
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     status = db.Column(db.String(30), nullable=False)
     priority = db.Column(db.String(30), nullable=False)
-    #attachment =
     #make user - tickets many to many relationship
+    #file = db.Column(db.String(120))
     created_by_id = db.Column(db.Integer, nullable=False)
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable=False)
     comment = db.relationship('Comment', backref='title', lazy='dynamic')
+    attach = db.relationship('Attachment', backref='ticket', lazy='dynamic')
     #projects = db.relationship('Projects', backref=db.backref('ticketso', uselist=False), lazy=True)
 
 
@@ -57,9 +58,12 @@ class Tickets(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime,default=datetime.utcnow)
     author = db.Column(db.Integer,nullable=True)
-    path = db.Column(db.Text, index=True)
     ticket_id = db.Column(db.Integer, db.ForeignKey('tickets.id'),nullable=False)
 
+class Attachment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    file = db.Column(db.String(140))
+    ticket_id = db.Column(db.Integer, db.ForeignKey('tickets.id'), nullable=False)
 

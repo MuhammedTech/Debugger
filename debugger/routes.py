@@ -1,11 +1,12 @@
-
-
+import os
+import secrets
 from flask import render_template,flash,redirect,url_for,request
 from debugger import app,db
-from debugger.forms import RegistrationForm,LoginForm,TicketForm,ProjectForm,CommentForm
-from debugger.models import Users,Projects,Tickets,Comment
+from debugger.forms import RegistrationForm,LoginForm,TicketForm,ProjectForm,CommentForm,AttachForm
+from debugger.models import Users,Projects,Tickets,Comment,Attachment
 from flask_login import current_user,logout_user,login_user, login_required
 from debugger import bcrypt
+
 
 
 @app.route('/dashboard')
@@ -17,6 +18,7 @@ def index():
     else:
         tickets = Tickets.query.all()
     return render_template('home.html', projects = projects , tickets = tickets)
+
 @app.route('/register',methods=['GET','POST'])
 def register():
     if current_user.is_authenticated:
@@ -30,6 +32,8 @@ def register():
         flash(f'Account created for {form.username.data}!','success')
         return redirect(url_for('login'))
     return render_template('register.html',title='Register',form=form)
+
+
 @app.route('/',methods=['GET','POST'])
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -48,6 +52,7 @@ def login():
     return render_template('login.html',title='Login',form=form)
 
 
+
 @app.route('/project/<project_id>')
 @login_required
 def project(project_id):
@@ -55,19 +60,40 @@ def project(project_id):
     return render_template('project.html', title=project.title, project=project)
 
 
+def save_file(form_file):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_file.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/files', picture_fn)
+    form_file.save(picture_path)
+    return picture_fn
+
 @app.route('/ticket/<ticket_id>',methods=['GET','POST'])
 @login_required
 def ticket(ticket_id):
     ticket = Tickets.query.get_or_404(ticket_id)
-    com = Comment.query.filter_by(ticket_id=ticket.id).order_by(Comment.path.asc()).first()
+    com = Comment.query.filter_by(ticket_id=ticket.id).first()
     form = CommentForm()
+    attachform = AttachForm()
     if form.validate_on_submit() and form.body.data:
         comment = Comment(body=form.body.data,ticket_id=ticket_id,author = current_user.username)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been published.')
         return redirect(url_for('ticket', ticket_id=ticket_id))
-    return render_template('ticket.html', title=ticket.title, ticket=ticket,form=form,comment=com)
+    if attachform.validate_on_submit():
+        if attachform.file.data:
+            picture_file = save_file(attachform.file.data)
+            attachment = Attachment(file=picture_file,ticket_id=ticket_id)
+            db.session.add(attachment)
+        db.session.commit()
+        flash('Your file has been published.')
+        return redirect(url_for('ticket', ticket_id=ticket_id))
+    attachment = Attachment()
+    file = url_for('static', filename='files/' + str(attachment.file))
+    return render_template('ticket.html', title=ticket.title,file=file ,ticket=ticket,form=form,comment=com,attachform=attachform)
+
+
 
 
 @app.route('/createTicket',methods=['GET','POST'])
