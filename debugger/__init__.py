@@ -30,22 +30,3 @@ with app.app_context():
         migrate.init_app(app, db)
 
 from debugger import routes
-
-#push changes  git push origin master
-#sqlite3 debugger/site.db
-#update users set admin = '1' where id = 1;
-#{{ form.errors }}
-#python run.py db migrate and python run.py db upgrade
-
-#                    {% if current_user.is_authenticated and current_user['expert'] == 1 and ticket.status != 'Resolved'  %}
-#                    <td><a href="{{ url_for ('editTicket', ticket_id = ticket.id ) }}">Edit</a></td>
-#                    {% endif %}
-
-
-#export FLASK_APP=db_table.py
-# flask db stamp head
-# flask db migrate
-# flask db upgrade
-
-
-#STACK ON MIGRATING 08.17.2020
