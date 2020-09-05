@@ -67,3 +67,7 @@ class Attachment(db.Model):
     file = db.Column(db.String(140))
     ticket_id = db.Column(db.Integer, db.ForeignKey('tickets.id'), nullable=False)
 
+    def __repr__(self):
+        return f"{self.file}"
+
+

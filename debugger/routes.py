@@ -1,6 +1,6 @@
 import os
 import secrets
-from flask import render_template,flash,redirect,url_for,request
+from flask import render_template,flash,redirect,url_for,request,send_file,send_from_directory
 from debugger import app,db
 from debugger.forms import RegistrationForm,LoginForm,TicketForm,ProjectForm,CommentForm,AttachForm
 from debugger.models import Users,Projects,Tickets,Comment,Attachment
@@ -68,7 +68,7 @@ def save_file(form_file):
     form_file.save(picture_path)
     return picture_fn
 
-@app.route('/ticket/<ticket_id>',methods=['GET','POST'])
+@app.route('/ticket/<int:ticket_id>',methods=['GET','POST'])
 @login_required
 def ticket(ticket_id):
     ticket = Tickets.query.get_or_404(ticket_id)
@@ -89,8 +89,7 @@ def ticket(ticket_id):
         db.session.commit()
         flash('Your file has been published.')
         return redirect(url_for('ticket', ticket_id=ticket_id))
-    attachment = Attachment()
-    file = url_for('static', filename='files/' + str(attachment.file))
+    file = url_for('static', filename='files/' + str(ticket.attach))
     return render_template('ticket.html', title=ticket.title,file=file ,ticket=ticket,form=form,comment=com,attachform=attachform)
 
 
@@ -104,7 +103,7 @@ def createTicket():
     users = Users.query.all()
     form = TicketForm()
     if form.validate_on_submit():
-       ticket = Tickets(title=form.title.data,ticket_text=form.ticket_text.data,created_by_id=current_user.username,expert_id= str(form.user_id.data),project_id= str(form.project.data),status=form.status.data,priority=form.priority.data)
+       ticket = Tickets(title=form.title.data,ticket_text=form.ticket_text.data,created_by_id=current_user.username,expert_id= str(form.user_id.data),project_id = str(form.project.data),status=form.status.data,priority=form.priority.data)
        db.session.add(ticket)
        db.session.commit()
        flash('Your ticket has been created', 'success')

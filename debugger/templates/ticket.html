@@ -51,7 +51,6 @@
 </div>
 
 <form method="POST" action="" class="form-horizontal">
-    {{ form.errors }}
                 {{ form.hidden_tag() }}
                 {{ attachform.hidden_tag() }}
 <div class="container">
@@ -98,24 +97,26 @@
 </div>
 </div>
 </form>
-<form method="POST" action="" class="form-horizontal" enctype="multipart/form-data">
-    {{ form.errors }}
-                {{ attachform.hidden_tag() }}
-                <div class="form-group">
-                    {{ attachform.file.label() }}
-                    {{ attachform.file(class="form-control-file") }}
-                    {% if attachform.file.errors %}
-                        {% for error in attachform.file.errors %}
-                            <span class="text-danger">{{ error }}</span></br>
-                        {% endfor %}
-                    {% endif %}
-                    {{ attachform.submit }}
-                </div>
-</form>
-
-<a href="{{ file }}" download>
- {{ file }}
-</a>
-
+    <form method="POST" action="" class="was-validated" enctype="multipart/form-data">
+            {{ attachform.hidden_tag() }}
+              <div class="custom-file">
+                  {{ attachform.file(class="custom-file-input") }}
+                <label class="custom-file-label">Choose file</label>
+              </div>
+                {{ attachform.submit }}
+    </form>
+        <script>
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+        </script>
+        {% for fil in ticket.attach %}
+        <a href="#" download>
+            <ul>
+                <li> {{ fil }}</li>
+            </ul>
+        </a>
+        {% endfor %}
 
 {% endblock %}
