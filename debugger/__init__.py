@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'thisissecretkey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['UPLOAD_FOLDER'] = '/Users/a10.12/PycharmProjects/QuestionAnswer/debugger/static/files'
 
 db = SQLAlchemy(app)
 

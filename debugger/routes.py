@@ -6,6 +6,7 @@ from debugger.forms import RegistrationForm,LoginForm,TicketForm,ProjectForm,Com
 from debugger.models import Users,Projects,Tickets,Comment,Attachment
 from flask_login import current_user,logout_user,login_user, login_required
 from debugger import bcrypt
+from io import BytesIO
 
 
 
@@ -89,11 +90,14 @@ def ticket(ticket_id):
         db.session.commit()
         flash('Your file has been published.')
         return redirect(url_for('ticket', ticket_id=ticket_id))
-    file = url_for('static', filename='files/' + str(ticket.attach))
-    return render_template('ticket.html', title=ticket.title,file=file ,ticket=ticket,form=form,comment=com,attachform=attachform)
+    #file = url_for('static', filename='files/' + str(ticket.attach))
+    return render_template('ticket.html', title=ticket.title,ticket=ticket,form=form,comment=com,attachform=attachform)
 
 
-
+@app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
+def download(filename):
+    uploads = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
+    return send_from_directory(directory=uploads, mimetype='zip',filename=filename, as_attachment=True)
 
 @app.route('/createTicket',methods=['GET','POST'])
 @login_required
