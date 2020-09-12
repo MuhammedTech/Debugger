@@ -1,12 +1,16 @@
 import os
 import secrets
-from flask import render_template,flash,redirect,url_for,request,send_file,send_from_directory
+
+import blueprint as blueprint
+from flask import render_template,flash,redirect,url_for,request,send_from_directory
 from debugger import app,db
 from debugger.forms import RegistrationForm,LoginForm,TicketForm,ProjectForm,CommentForm,AttachForm
-from debugger.models import Users,Projects,Tickets,Comment,Attachment
+from debugger.models import Users, Projects, Tickets, Comment, Attachment, OAuth
 from flask_login import current_user,logout_user,login_user, login_required
-from debugger import bcrypt
-from io import BytesIO
+from debugger import bcrypt,github_blueprint
+from flask_dance.contrib.github import github
+from flask_dance.consumer import oauth_authorized,oauth_error
+from sqlalchemy.orm.exc import NoResultFound
 
 
 
@@ -52,7 +56,32 @@ def login():
             flash('Login Unsuccessful.Please check username and password','danger')
     return render_template('login.html',title='Login',form=form)
 
+"""@app.route('/github')
+def github_login():
+    if not github.authorized:
+        return redirect(url_for('github.login'))
+    account_info = github.get('/user')
+    account_info_json = account_info.json()
+    return '<h1>Your Github name is {}'.format(account_info_json['login'])
 
+@oauth_authorized.connect_via(github_blueprint)
+def github_logged_in(blueprint,token):
+
+    account_info = blueprint.session.get('/user')
+
+    if account_info.ok:
+        account_info_json = account_info.json()
+        github_username = account_info_json['login']
+        query = Users.query.filter_by(username=github_username)
+        try:
+            user = query.one()
+        except NoResultFound:
+            user = Users(username=github_username)
+            db.session.add(user)
+            db.session.commit()
+        if user:
+            
+        login_user(user)"""
 
 @app.route('/project/<project_id>')
 @login_required
