@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField,BooleanField,FileField,TextAreaField,SelectField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,TextAreaField,SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField,QuerySelectMultipleField
 from wtforms.validators import DataRequired, Length, ValidationError
 from debugger.models import Users,Projects
-from flask_wtf.file import FileField, FileRequired
+from flask_wtf.file import FileField
 
 
 class RegistrationForm(FlaskForm):
@@ -22,10 +22,6 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember me')
     submit = SubmitField('Login')
 
-
-"""class MultiCheckboxField(QuerySelectField):
-    widget = widgets.ListWidget(prefix_label=False)
-    option_widget = widgets.CheckboxInput()"""
 
 class ProjectForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])

@@ -2,8 +2,7 @@
 from flask_login import UserMixin,current_user
 from debugger import login_manager,db
 from datetime import datetime
-from flask_dance.consumer.storage.sqla import OAuthConsumerMixin,SQLAlchemyStorage
-from . import github_blueprint
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -22,12 +21,6 @@ class Users(db.Model,UserMixin):
 
     def __repr__(self):
         return f"{self.username}"
-
-class OAuth(OAuthConsumerMixin,db.Model):
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    user = db.relationship(Users)
-
-github_blueprint.storage = SQLAlchemyStorage(OAuth, db.session, user=current_user)
 
 class Projects(db.Model):
     id = db.Column(db.Integer, primary_key=True)
