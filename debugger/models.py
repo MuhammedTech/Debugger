@@ -41,8 +41,6 @@ class Tickets(db.Model):
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     status = db.Column(db.String(30), nullable=False)
     priority = db.Column(db.String(30), nullable=False)
-    #make user - tickets many to many relationship
-    #file = db.Column(db.String(120))
     created_by_id = db.Column(db.Integer, nullable=False)
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable=False)
