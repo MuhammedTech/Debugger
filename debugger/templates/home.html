@@ -27,12 +27,12 @@
                 {% for ticket in tickets %}
                 <tr>
                     <th style="background-color:#2b3f50" scope="row">{{ ticket.id }}</th>
-                    <td style="background-color:#2b3f50"><a href="{{ url_for ('ticket', ticket_id = ticket.id ) }}">{{ticket.title}}</a></td>
+                    <td style="background-color:#2b3f50"><a href="{{ url_for ('tickets.ticket', ticket_id = ticket.id ) }}">{{ticket.title}}</a></td>
                       <td style="background-color:#2b3f50">{{ ticket.date_posted }}</td>
                       <td style="background-color:#2b3f50">{{ ticket.status }}</td>
                      <td style="background-color:#2b3f50">{{ ticket.priority }}</td>
 {% if current_user.is_authenticated and current_user['expert'] == 1 and ticket.status != 'Resolved'  %}
-                    <td style="background-color:#2b3f50"><a href="{{ url_for ('editTicket', ticket_id = ticket.id ) }}">Edit</a></td>
+                    <td style="background-color:#2b3f50"><a href="{{ url_for ('tickets.editTicket', ticket_id = ticket.id ) }}">Edit</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}
@@ -47,7 +47,7 @@
         <div class="col-lg-12">
           {% for project in projects %}
           <div class="list-group">
-              <h4><a class="list-group-item-heading" href="{{ url_for ('project', project_id = project.id ) }}">{{ project.title }}</a></h4>
+              <h4><a class="list-group-item-heading" href="{{ url_for ('projects.project', project_id = project.id ) }}">{{ project.title }}</a></h4>
           </div>
           {% endfor %}
         </div><!-- /.col-lg-12 -->

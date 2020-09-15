@@ -1,22 +1,22 @@
  {% macro show_links(current_user) %}
           <ul class="nav navbar-nav">
-            <li class="active"><a href="{{ url_for ('index') }}">Home</a></li>
-            <li><a href="{{ url_for ('about') }}">About</a></li>
+            <li class="active"><a href="{{ url_for ('main.index') }}">Home</a></li>
+            <li><a href="{{ url_for ('main.about') }}">About</a></li>
             {% if not current_user.is_authenticated %}
-            <li><a href="{{ url_for ('login') }}">Login</a></li>
-            <li><a href="{{ url_for ('register') }}">Register</a></li>
+            <li><a href="{{ url_for ('users.login') }}">Login</a></li>
+            <li><a href="{{ url_for ('users.register') }}">Register</a></li>
             {% endif %}
             {% if current_user.is_authenticated and current_user['admin'] == 0 and current_user['expert'] == 0%}
             {% endif %}
             {% if current_user.is_authenticated and current_user['expert'] == 1 %}
-            <li><a href="{{ url_for ('createTicket') }}">Create a Ticket</a></li>
-            <li><a href="{{ url_for ('createProject') }}">Create a Project</a></li>
+            <li><a href="{{ url_for ('tickets.createTicket') }}">Create a Ticket</a></li>
+            <li><a href="{{ url_for ('projects.createProject') }}">Create a Project</a></li>
             {% endif %}
             {% if current_user.is_authenticated and current_user['admin'] == 1 %}
-            <li><a href="{{ url_for ('users') }}">Manage Roles</a></li>
+            <li><a href="{{ url_for ('users.userss') }}">Manage Roles</a></li>
             {% endif %}
             {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for ('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for ('users.logout') }}">Logout</a></li>
             {% endif %}
           </ul>
  {% endmacro %}

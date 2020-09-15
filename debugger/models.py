@@ -1,5 +1,5 @@
 
-from flask_login import UserMixin,current_user
+from flask_login import UserMixin
 from debugger import login_manager,db
 from datetime import datetime
 
