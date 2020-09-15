@@ -34,23 +34,4 @@ with app.app_context():
 
 from debugger import routes
 
-#export FLASK_APP=run.py
-#flask db u
-
-#sudo -u postgres psql
-#postgres
-
-#to run psql
-#psql -U postgres
-#postgres login
-#1807 password postgres
-
-#create db
-#create database flaskdb;
-
-#restart
-#sudo service postgresql restart
-
-#open pg_nba.conf
-#sudo -u postgres nano /Library/PostgreSQL/11/data/pg_hba.conf
 
