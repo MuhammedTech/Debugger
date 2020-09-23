@@ -15,20 +15,20 @@ Bug Tracker is an application to track errors in software. It was created by Muk
 ## Features/Roles
 
 ##### Developer:
-View tickets for they are assigned to, can add comments or attachments to tickets they have access to.
+Can view tickets they are assigned to, can add comments or attachments to tickets they have access to.
 
 
 ##### Project Manager:
-Create new projects and new tickets and assign users to projects assign a developer to a ticket, can add comments or attachments to tickets.
+Can create new projects and new tickets and assign users to projects assign a developer to a ticket, can add comments or attachments to tickets.
 
 ##### Admin:
-Assign users to roles, view and edit all tickets, create new projects , assign users to projects for each role, add comments or attachments to tickets they have access to.
+Can assign users to roles, view and edit all tickets, create new projects , assign users to projects for each role, add comments or attachments to tickets they have access to.
 
 ##### Ticket priorities:
 A ticket can be Critical, High, Medium or Low priority.
 
 ##### Ticket statuses: 
-A ticket can be in one of five statuses:
+A ticket can be in one of four statuses:
 - Open: Ticket automatically assigned this status on creation
 - Pending: Work on the ticket has been suspended
 - Resolved: The issue raised in the ticket has been resolved
