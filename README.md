@@ -22,7 +22,7 @@ View tickets for they are assigned to, can add comments or attachments to ticket
 Create new projects and new tickets and assign users to projects assign a developer to a ticket, can add comments or attachments to tickets.
 
 ##### Admin:
-Assign users to roles View and edit all tickets Create new projects Assign users to projects For each role, users can add comments or attachments to tickets they have access to.
+Assign users to roles, view and edit all tickets, create new projects , assign users to projects for each role, add comments or attachments to tickets they have access to.
 
 ##### Ticket priorities:
 A ticket can be Critical, High, Medium or Low priority.
