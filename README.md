@@ -1,13 +1,15 @@
 # The Debugger System
 ##### Debugger app made using Flask
 
-*In order to view the app in live mode go to https://thedebugger.herokuapp.com/
+*In order to view the app in live mode go to https://thedebugger.herokuapp.com/*
 
-To get the full experience login as a Project Manager role. *
+To get the full experience login as a Project Manager role
 
 ***username : expert***
 
 ***password : expert***
+
+## Motivation
 
 
 ##About
