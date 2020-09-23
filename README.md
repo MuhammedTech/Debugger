@@ -29,9 +29,10 @@ A ticket can be Critical, High, Medium or Low priority.
 
 ##### Ticket statuses: 
 A ticket can be in one of five statuses:
-Open: Ticket automatically assigned this status on creation
-Pending: Work on the ticket has been suspended
-Resolved: The issue raised in the ticket has been resolved
-Closed: All the resolved tickets
-Ticket priorities: 
-High, Medium, Low
+- Open: Ticket automatically assigned this status on creation
+- Pending: Work on the ticket has been suspended
+- Resolved: The issue raised in the ticket has been resolved
+- Closed: All the resolved tickets
+
+##### Ticket priorities: 
+- High, Medium, Low
