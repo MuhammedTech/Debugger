@@ -13,10 +13,12 @@ def index():
         tickets = Tickets.query.filter(Tickets.expert_id == current_user.username).all()
     else:
         tickets = Tickets.query.all()
+
+
+
     return render_template('home.html', projects = projects , tickets = tickets)
 
 
 @main.route('/about')
-@login_required
 def about():
     return render_template('about.html')
