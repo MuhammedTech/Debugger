@@ -44,8 +44,8 @@ class Tickets(db.Model):
     created_by_id = db.Column(db.Integer, nullable=False)
     expert_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'),nullable=False)
-    comment = db.relationship('Comment', backref='title', lazy='dynamic')
-    attach = db.relationship('Attachment', backref='ticket', lazy='dynamic')
+    comment = db.relationship('Comment', backref='title', cascade="all,delete",lazy='dynamic')
+    attach = db.relationship('Attachment', backref='ticket', cascade="all,delete", lazy='dynamic')
     #projects = db.relationship('Projects', backref=db.backref('ticketso', uselist=False), lazy=True)
 
 

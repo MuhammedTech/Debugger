@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, redirect, url_for, flash, request, send_from_directory, current_app
+from flask import Blueprint, render_template, abort ,redirect, url_for, flash, request, send_from_directory, current_app
 from flask_login import current_user,login_required
 from debugger import db
 from debugger.models import Tickets,Users,Comment,Attachment
@@ -66,7 +66,7 @@ def editTicket(ticket_id):
         ticket.status = form.status.data
         ticket.priority = form.priority.data
         db.session.commit()
-        flash('Your post has been updated!', 'success')
+        flash('Your ticket has been updated!', 'success')
         return redirect(url_for('main.index', ticket_id=ticket.id))
     elif request.method == "GET":
         form.status.default = ticket.status
@@ -77,6 +77,19 @@ def editTicket(ticket_id):
         form.title.data = ticket.title
         form.ticket_text.data = ticket.ticket_text
     return render_template('editTicket.html',form=form, title='Edit Ticket')
+
+@tickets.route('/deleteTicket/<int:ticket_id>/delete',methods=['POST'])
+@login_required
+def delete_ticket(ticket_id):
+    ticket = Tickets.query.get_or_404(ticket_id)
+    if ticket.created_by_id != current_user:
+        abort(403)
+    db.session.delete(ticket)
+    db.session.commit()
+    flash('Ticket has been deleted!', 'success')
+    return redirect(url_for('main.index'))
+
+
 
 @tickets.route('/uploads/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
