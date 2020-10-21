@@ -5,9 +5,20 @@
 
 To get the full experience login as a Project Manager role
 
-***username : expert***
+***username : manager***
 
-***password : expert***
+***password : manager***
+
+You can as well login as a developer and admin roles
+
+Developer:
+***username : developer***
+
+***password : developer***
+
+Admin:
+***password : admin***
+***password : admin***
 
 ## About
 Bug Tracker is an application to track errors in software. It was created by Mukammed Alimbet as a student project for the UCLA Extension certificate program in "Application Programming". Bug Tracker uses a ticketing system to record bugs or other issues in the software development process on a per-project basis. It implements user- and role-level security to ensure only authorized users can access tickets and projects. The application was built using Python / Flask framework with an sqlite3 database. Bug Tracker’s webpages use HTML5/Bootstrap. Roles: Bug Tracker has three roles that users can be assigned to. Users are automatically placed in a developer role upon registration. Below are brief descriptions of the permissions of each role:
