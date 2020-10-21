@@ -62,6 +62,8 @@ def promote(user_id):
         return redirect(url_for('main.index'))
     user = Users.query.get_or_404(user_id)
     user.expert = 1
+    if user.expert == 1:
+        user.expert = 0
     db.session.commit()
     return redirect(url_for('main.index'))
 

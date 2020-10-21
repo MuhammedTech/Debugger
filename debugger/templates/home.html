@@ -24,6 +24,7 @@
                 </tr>
               </thead>
               <tbody>
+              {% if current_user.is_authenticated %}
                 {% for ticket in tickets %}
                 <tr>
                     <th style="background-color:#2b3f50" scope="row">{{ ticket.id }}</th>
@@ -38,6 +39,7 @@
                 {% endfor %}
               </tbody>
             </table>
+            {% endif %}
         </div><!-- /.col-lg-12 -->
       </div>
        <div class="page-header">

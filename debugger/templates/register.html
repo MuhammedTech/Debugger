@@ -41,14 +41,33 @@
                       {{ form.submit (class="btn btn-primary") }}
                     </div>
                   </div>
-                    <div class="border-top pt-3">
-            <small class="text-muted">
-                Need An Account? <a class="ml-2" href="{{ url_for ('users.login') }}">Sign In Now</a>
-            </small>
-        </div>
                 </fieldset>
               </form>
             </div>
+              <div class="border-top pt-3">
+                            Already have an account? <a class="ml-50" href="{{ url_for('users.login') }}">Sign In Now</a>
+              </div>
+              <div class="border-top pt-3">
+                  Are you here to explore the project? if yes, Please login using following data in order to fully observe the project:
+                 <p></p>
+                  <p>For Manager view:</p>
+                  <ul>
+                      <li>Username: manager</li>
+                      <li>Password: manager</li>
+                  </ul>
+                  <p></p>
+                  <p>For Developer view:</p>
+                  <ul>
+                      <li>Username: developer</li>
+                      <li>Password: developer</li>
+                  </ul>
+                  <p></p>
+                  <p>For Admin view:</p>
+                  <ul>
+                      <li>Username: admin</li>
+                      <li>Password: admin</li>
+                  </ul>
+              </div>
           </div>
 
     </div> <!-- /container -->
