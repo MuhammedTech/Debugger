@@ -22,7 +22,7 @@ Admin:
 ***password : admin***
 
 ## About
-The Bug Tracker is an application to track errors in software. It was created by Mukammed Alimbet as a personal pet project and compeleted independently. Bug Tracker uses a ticketing system to record bugs or other issues in the software development process on a per-project basis. It implements user- and role-level security to ensure only authorized users can access tickets and projects. The application was built using Python / Flask framework with an sqlite3 database. Bug Tracker’s webpages use HTML5/Bootstrap. Roles: Bug Tracker has three roles that users can be assigned to. Users are automatically placed in a developer role upon registration. Below are brief descriptions of the permissions of each role:
+The Bug Tracker is an application to track errors in software. It was created by Mukammed Alimbet as a personal pet project and completed independently. Bug Tracker uses a ticketing system to record bugs or other issues in the software development process on a per-project basis. It implements user- and role-level security to ensure only authorized users can access tickets and projects. The application was built using Python / Flask framework with an sqlite3 database. Bug Tracker’s webpages use HTML5/Bootstrap. Roles: Bug Tracker has three roles that users can be assigned to. Users are automatically placed in a developer role upon registration. Below are brief descriptions of the permissions of each role:
 
 ## Features/Roles
 
